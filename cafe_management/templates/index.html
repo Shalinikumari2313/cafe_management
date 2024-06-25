@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cafe Menu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Cafe Menu</h1>
+        <ul>
+            {% for item, price in menu.items() %}
+                <li>{{ item }} - ${{ price }}</li>
+            {% endfor %}
+        </ul>
+        <form action="{{ url_for('order') }}" method="post">
+            <label for="item">Item:</label>
+            <input type="text" id="item" name="item" required>
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required>
+            <button type="submit">Place Order</button>
+        </form>
+    </div>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div id="flash-message">
+                <p>{{ messages[0] }}</p>
+            </div>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>
